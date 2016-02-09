@@ -102,7 +102,16 @@ CRUDConnector.prototype.__create = function(jsonbody,props,attachments,datacallb
 		  		} else
 		  		{
 		  			console.log("***** RESPONSE "+res.statusCode);
-		  			data = JSON.parse(resdata)
+    		  		        try
+                                        {
+                                            data = JSON.parse(resdata)
+                                        }
+                                        catch (e)
+                                        {
+                                            data = {"error code": "500",
+                                                    "description": "THINGS HAVE GONE HORRIBLY AWRY!"};
+                                            deferred.reject(data);
+                                        }
 		  		}
 			  	var resourcemem = new Resource(data,this.connection);
 			  	statusCode = res.statusCode;
